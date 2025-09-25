@@ -1,0 +1,15 @@
+<div class="pagination">
+  <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">
+    Précédent
+  </button>
+
+  @for (page of pages; track page) {
+    <button (click)="changePage(page)" [class.active]="currentPage === page">
+      {{ page }}
+    </button>
+  }
+
+  <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">
+    Suivant
+  </button>
+</div>

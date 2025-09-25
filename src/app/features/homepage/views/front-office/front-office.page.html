@@ -1,0 +1,37 @@
+<div class="front-office-container">
+
+  <!-- Message de bienvenue -->
+  <header class="welcome">
+    <h1>Bienvenue sur l'annuaire des administrations</h1>
+    <p>Consultez et recherchez facilement toutes les administrations du pays selon vos besoins.</p>
+  </header>
+
+  <!-- Formulaire de recherche et filtrage -->
+  <form [formGroup]="searchForm" class="search-filter">
+    <input type="text" placeholder="Rechercher..." formControlName="searchTerm" />
+    <select formControlName="selectedCategorie">
+      <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+    </select>
+  </form>
+
+  <!-- Grille de cards -->
+  <section class="cards-container">
+    <div class="card" *ngFor="let admin of paginatedAdministrations; ">
+      <img [src]="admin.imageUrl" alt="{{ admin.nom }}">
+      <div class="card-info">
+        <h2>{{ admin.nom }}</h2>
+        <p><strong>Mission:</strong> {{ admin.mission }}</p>
+        <p><strong>Ville:</strong> {{ admin.ville }}</p>
+        <p><strong>Catégorie:</strong> {{ admin.categorie }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pagination -->
+  <section class="pagination">
+    <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Précédent</button>
+    <span>Page {{ currentPage }} / {{ totalPages }}</span>
+    <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Suivant</button>
+  </section>
+
+</div>

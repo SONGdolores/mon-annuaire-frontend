@@ -1,0 +1,43 @@
+<div class="modal-header">
+  <h4 class="modal-title">Ajouter un utilisateur</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+
+<div class="modal-body">
+   @if(errorMessage) {
+    <div class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  }
+
+  <form [formGroup]="userForm">
+
+    <div class="mb-3">
+      <label class="form-label">Login</label>
+      <input type="text" class="form-control" formControlName="login" placeholder="Entrez le nom">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Mot de passe</label>
+      <input type="password" class="form-control" formControlName="mot_de_passe" placeholder="Entrez le mot de passe">
+    </div>
+
+
+    <div class="mb-3">
+      <label class="form-label">Rôle</label>
+      <select id="roles" class="form-select" formControlName="roleId">
+        @for (role of roles; track role) {
+          <option [value] ="role.id"> {{ role.nom}}</option>
+        }
+      </select>
+    </div>
+
+    <div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="activeModal.dismiss()">Annuler</button>
+  <button type="button" class="btn btn-primary" (click)="onSubmit()">Enregistrer</button>
+</div>
+
+  </form>
+</div>
+
+

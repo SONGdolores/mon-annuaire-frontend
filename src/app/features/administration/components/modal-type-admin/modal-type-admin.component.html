@@ -1,0 +1,43 @@
+<div class="modal-header">
+  <h4 class="modal-title">Ajouter un type de structure</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+
+<div class="modal-body">
+
+  @if(successMessage) {
+    <div class="alert alert-success text-center" typeAdmin="alert">
+      {{ successMessage }}
+    </div>
+  }
+
+   @if(errorMessage) {
+    <div class="alert alert-danger text-center" typeAdmin="alert">
+      {{ errorMessage }}
+    </div>
+  }
+  
+  @if(!isLoad()) {
+    <p class='text-center'>Chargement des données en cours...</p>
+  } @else {
+     <form [formGroup]="typeAdminForm">
+
+    <div class="mb-3">
+      <label class="form-label">libelle</label>
+      <input type="text" class="form-control" formControlName="libelle" placeholder="Entrez le libelle ou nom du type de la structure">
+      @if(typeAdminForm.get('libelle')?.invalid && typeAdminForm.get('libelle')?.touched) {
+        <div class="text-danger small">
+          Le libelle est obligatoire
+        </div>
+      }
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-secondary" (click)="activeModal.dismiss()">Annuler</button>
+      <button type="button" class="btn btn-primary" (click)="onSubmit()">Enregistrer</button>
+    </div>
+
+  </form>
+  }
+   
+</div>

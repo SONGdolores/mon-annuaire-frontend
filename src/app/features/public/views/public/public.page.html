@@ -1,0 +1,39 @@
+<!-- Header -->
+<app-header></app-header>
+
+<!-- Section Recherche et Filtre -->
+<section class="search-section">
+  <app-search-filter 
+  (filterChange)="onFilterChange($event.search, $event.categorie)">
+  </app-search-filter>
+</section>
+
+<!-- Section Cartes d'administrations -->
+<section class="cards-section">
+  <div class="administrations-grid">
+  @for (admin of administrations; track admin.id) {
+    <app-administration-card [administration]="admin"></app-administration-card>
+  }
+</div>
+</section>
+
+<!-- Section Pagination -->
+<section class="pagination-section">
+  <app-pagination
+    [totalItems]="total"
+    [currentPage]="page"
+    [pageSize]="limit"
+    (pageChanged)="onPageChange($event)">
+  </app-pagination>
+</section>
+
+
+<!-- 
+
+Section Carte Leaflet 
+<section class="map-section">
+  <app-map-view [administrations]="administrations"></app-map-view>
+</section>
+
+
+-->

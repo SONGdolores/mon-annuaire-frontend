@@ -1,0 +1,91 @@
+<div class="main-wrapper">
+
+  <div class="header">
+
+    <a class="mobile_btn" id="mobile_btn">
+      <i class="fas fa-bars"></i>
+    </a>
+
+
+    <ul class="nav user-menu">
+
+      <li class="nav-item dropdown has-arrow new-user-menus">
+        <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
+          <span class="user-img">
+            <img class="rounded-circle">
+            <div class="user-text">
+              <h6>Soeng Souy</h6>
+              <p class="text-muted mb-0">Administrator</p>
+            </div>
+          </span>
+        </a>
+        <div class="dropdown-menu">
+          <div class="user-header">
+            <div class="avatar avatar-sm">
+              <img src="assets/img/profiles/avatar-01.jpg" alt="User Image" class="avatar-img rounded-circle">
+            </div>
+            <div class="user-text">
+              <h6>Soeng Souy</h6>
+              <p class="text-muted mb-0">Administrator</p>
+            </div>
+          </div>
+          <a class="dropdown-item" href="profile.html">My Profile</a>
+          <a class="dropdown-item" href="inbox.html">Inbox</a>
+          <a class="dropdown-item" (click)="logout()">Logout</a>
+        </div>
+      </li>
+
+    </ul>
+
+  </div>
+
+
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-inner slimscroll">
+      <div id="sidebar-menu" class="sidebar-menu">
+        <ul>
+          <li class="menu-title">
+                            <span>Main Menu</span>
+                        </li>
+
+          <li class="submenu">
+            <a routerLink="/admin/user"><i class="fas fa-chalkboard-teacher"></i> <span> Utilisateurs</span></a>
+
+
+          <li class="submenu">
+            <a href="javascript:void(0)" (click)="toggleMenu('autorisations')" [class.subdrop]="menuActif === 'autorisations'" >
+              <i class="fas fa-shield-alt"></i> <span> Autorisations</span> <span class="menu-arrow"></span>
+            </a>
+
+            <ul [style.display]="menuActif === 'autorisations' ? 'block' : 'none'">
+              <li><a routerLink="/admin/role">Liste roles</a></li>
+              <li><a routerLink="/admin/permission">Liste permissions</a></li>
+            </ul>
+          </li>
+
+          <li class="submenu">
+            <a href="javascript:void(0)" (click)="toggleMenu('administrations')" [class.subdrop]="menuActif === 'administrations'">
+              <i class="feather-grid"></i> <span> Administrations </span><span class="menu-arrow"></span>
+            </a>
+
+            <ul [style.display]="menuActif === 'administrations' ? 'block' : 'none'">
+              <li><a routerLink="/administration">Liste des administrations</a></li>
+              <li><a routerLink="/administration/typestructure">Liste des types de structures</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="page-wrapper">
+    <div class="content container-fluid">
+      <router-outlet></router-outlet>
+
+    </div>
+    <footer>
+      <p>Copyright © 2022 Dreamguys.</p>
+    </footer>
+  </div>
+</div>

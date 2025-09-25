@@ -1,0 +1,131 @@
+<div class="modal-header">
+  <h4 class="modal-title">Ajouter une administration</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+
+<div class="modal-body">
+  @if(successMessage) {
+  <div class="alert alert-success text-center">{{ successMessage }}</div>
+  }
+
+  @if(errorMessage) {
+  <div class="alert alert-danger text-center">{{ errorMessage }}</div>
+  }
+
+  @if(isLoad()) {
+  <p class="text-center">Chargement des données...</p>
+  } @else {
+  <form [formGroup]="adminForm" (ngSubmit)="onSubmit()">
+
+    <!-- Nom -->
+    <div class="mb-3">
+      <label class="form-label">Nom</label>
+      <input type="text" class="form-control" formControlName="nom" placeholder="Nom de l'administration">
+      @if(adminForm.get('nom')?.invalid && adminForm.get('nom')?.touched) {
+      <div class="text-danger small">Nom</div>
+      }
+    </div>
+
+    <!-- Mission -->
+    <div class="mb-3">
+      <label class="form-label">Mission </label>
+      <textarea class="form-control" formControlName="mission" placeholder="Mission"></textarea>
+      @if(adminForm.get('mission')?.invalid && adminForm.get('mission')?.touched) {
+      <div class="text-danger small">Mission </div>
+      }
+    </div>
+
+    <!-- Ministère -->
+    <div class="mb-3">
+      <label class="form-label">Ministère de tutelle</label>
+      <input type="text" class="form-control" formControlName="ministereDeTutelle" placeholder="Ministère">
+    </div>
+
+    <!-- TypeAdministration -->
+    <div class="mb-3">
+      <label class="form-label">Type d'administration </label>
+      <ng-select [items]="typeAdministrations()" bindLabel="libelle" bindValue="id"
+        formControlName="typeAdministrationId">
+      </ng-select>
+      @if(adminForm.get('typeAdministrationId')?.invalid && adminForm.get('typeAdministrationId')?.touched) {
+      <div class="text-danger small">Type</div>
+      }
+    </div>
+
+    <!-- Quartier -->
+    <div class="mb-3">
+      <label class="form-label">Quartier</label>
+      <input type="text" class="form-control" formControlName="quartier" placeholder="Quartier">
+    </div>
+
+    <!-- Latitude -->
+    <div class="mb-3">
+      <label class="form-label">Latitude</label>
+      <input type="number" step="any" class="form-control" formControlName="latitude" placeholder="Latitude">
+    </div>
+
+    <!-- Longitude -->
+    <div class="mb-3">
+      <label class="form-label">Longitude</label>
+      <input type="number" step="any" class="form-control" formControlName="longitude" placeholder="Longitude">
+    </div>
+
+    <!-- Ville -->
+    <div class="mb-3">
+      <label class="form-label">Ville</label>
+      <ng-select [items]="villes()" bindLabel="nom" bindValue="id" formControlName="villeId">
+      </ng-select>
+    </div>
+
+    <!-- Contacts -->
+    <div class="mb-3">
+      <label class="form-label">Contacts</label>
+      <ng-select [items]="contacts()" bindLabel="libelle" bindValue="id" [multiple]="true" formControlName="contacts">
+      </ng-select>
+    </div>
+
+    <!-- Services -->
+    <div class="mb-3">
+      <label class="form-label">Services</label>
+      <ng-select [items]="services()" bindLabel="description" bindValue="id" [multiple]="true"
+        formControlName="services">
+      </ng-select>
+    </div>
+
+    <!-- Horaires -->
+    <div class="mb-3">
+      <label class="form-label">Horaires</label>
+      <div formArrayName="horaires">
+        @for (horaire of horaires().controls; track $index; let i = $index) {
+        <div [formGroupName]="i" class="d-flex gap-2 mb-2">
+          <ng-select [items]="joursSemaine" bindLabel="label" bindValue="value" formControlName="jour"></ng-select>
+          <input type="time" class="form-control" formControlName="heureOuverture">
+          <input type="time" class="form-control" formControlName="heureFermeture">
+          <button type="button" class="btn btn-danger btn-sm" (click)="removeHoraire(i)">X</button>
+        </div>
+        }
+        <button type="button" class="btn btn-outline-primary btn-sm mt-2" (click)="addHoraire()">+ Ajouter
+          horaire</button>
+      </div>
+    </div>
+
+    <!-- Images -->
+    <div class="mb-3">
+      <label class="form-label">Images</label>
+      <input type="file" (change)="onFileSelected($event)" multiple>
+      <div class="mt-2">
+        @for (img of images; track $index) {
+        <div>{{ img }}</div>
+        }
+      </div>
+    </div>
+
+
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-secondary" (click)="activeModal.dismiss()">Annuler</button>
+      <button type="button" class="btn btn-primary" (click)="onSubmit()">Enregistrer</button>
+    </div>
+  </form>
+  }
+</div>

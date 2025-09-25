@@ -1,0 +1,12 @@
+<div class="admin-card" (click)="goToDetails(administration.id)">
+  <div
+  class="image"
+  [style.background-image]="'url(' + administration.cover + ')'"
+></div>
+  <div class="content">
+  <h3>{{ administration.nom }}</h3>
+  <p><strong>TypeAdministration :</strong> {{ administration.typeAdministration?.libelle }}</p>
+  <p><strong>Ville :</strong> {{ administration.ville?.nom }}</p>
+  <p><strong>Ministère de tutelle :</strong> {{ administration.ministereDeTutelle }}</p>
+  </div>
+</div>

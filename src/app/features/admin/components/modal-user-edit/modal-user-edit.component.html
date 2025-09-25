@@ -1,0 +1,43 @@
+<div class="modal-header">
+  <h5 class="modal-title">Modifier l'utilisateur</h5>
+  <button type="button" class="btn-close" (click)="close()"></button>
+</div>
+
+<div class="modal-body">
+  @if(dataLoading()) {
+      <p class="text-center">
+        Chargement des données en cours...
+      </p>
+  } @else {
+<form [formGroup]="userForm" (ngSubmit)="updateUserRole()">
+    <div class="mb-3">
+      <label class="form-label">Login</label>
+      <input type="text" class="form-control" formControlName="login" readonly />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Rôle</label>
+      <select class="form-select" formControlName="roleId">
+        @for(r of roles; track r) {
+          <option [value]="r.id">{{ r.nom }}</option>
+        }
+        
+      </select>
+    </div>
+
+    @if(errorMessage) {
+    <div class="alert alert-danger">{{ errorMessage }}</div>
+
+    }
+
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="close()">Annuler</button>
+      <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+        {{ isLoading ? 'En cours...' : 'Enregistrer' }}
+      </button>
+    </div>
+  </form>
+  }
+  
+</div>

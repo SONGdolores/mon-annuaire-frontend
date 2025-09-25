@@ -1,0 +1,113 @@
+@if (isLoading) {
+  <p>Chargement en cours...</p>
+} @else {
+  
+  @if (admin) {
+
+  <!-- Cover + Nom -->
+  <div class="admin-cover">
+    @if (admin.cover) {
+      <img [src]="admin.cover" alt="Cover {{ admin.nom }}" class="cover-image" />
+    }
+    <h1>{{ admin.nom }}</h1>
+    @if (admin.ministereDeTutelle) {
+      <h3>Ministère de tutelle : {{ admin.ministereDeTutelle }}</h3>
+    }
+  </div>
+
+  <!-- Mission et quartier -->
+  <section class="admin-mission-quartier">
+    @if (admin.mission) {
+      <h2>Mission</h2>
+      <p>{{ admin.mission }}</p>
+    }
+    @if (admin.quartier) {
+      <h2>Quartier</h2>
+      <p>{{ admin.quartier }}</p>
+    }
+    @if (admin.ville) {
+      <h2>Ville</h2>
+      <p>{{ admin.ville.nom }}</p>
+    }
+    @if (admin.typeAdministration) {
+      <h2>Type d'administration</h2>
+      <p>{{ admin.typeAdministration.libelle }}</p>
+    }
+  </section>
+
+  <!-- Services proposés -->
+  @if (admin.services.length) {
+    <section class="admin-services">
+      <h2>Services proposés</h2>
+      <ul>
+        @for(s of admin.services; track s.id) {
+          <li>{{ s.description }}</li>
+        }
+      </ul>
+    </section>
+  }
+
+  <!-- Horaires -->
+  @if (admin.horaires.length) {
+    <section class="admin-hours">
+      <h2>Horaires</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Jour</th>
+            <th>Ouverture</th>
+            <th>Fermeture</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(h of admin.horaires; track h.id) {
+            <tr>
+              <td>{{ h.jour | titlecase }}</td>
+              <td>{{ h.heureOuverture }}</td>
+              <td>{{ h.heureFermeture }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </section>
+  }
+
+  <!-- Contacts -->
+  @if (admin.contacts.length) {
+    <section class="admin-contacts">
+      <h2>Contacts</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Libellé</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(c of admin.contacts; track c.id) {
+            <tr>
+              <td>{{ c.libelle }}</td>
+              <td>{{ c.type }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </section>
+  }
+
+  <!-- Images de l'administration -->
+  @if (admin.images.length) {
+    <section class="admin-images">
+      <h2>Images de l'administration</h2>
+      <div class="images-grid">
+        @for(img of admin.images; track img.id) {
+          <img [src]="img.url" alt="Image {{ admin.nom }}" class="admin-image" />
+        }
+      </div>
+    </section>
+  }
+
+  } @else {
+    <p>Aucune donnée trouvée.</p>
+  }
+}

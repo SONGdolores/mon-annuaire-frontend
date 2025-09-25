@@ -1,0 +1,53 @@
+<div class="main-wrapper login-body">
+  <div class="login-wrapper">
+    <div class="container">
+      <div class="loginbox">
+        <div class="login-left">
+
+        </div>
+        <div class="login-right">
+
+          <div class="login-right-wrap">
+
+            <form [formGroup]="loginForm" (ngSubmit)="seConnecter()">
+                @if(messageErreur()) {
+                  <div class="alert-danger mb-3">
+                    {{ messageErreur() }}
+                  </div>
+                }
+
+              <div class="form-group">
+                <label for="login">Nom <span class="login-danger">*</span></label>
+                <input class="form-control" type="text" formControlName="login">
+                <span class="profile-views"><i class="fas fa-user-circle"></i></span>
+                <div class="text-danger" ngIf="errorMessageLogin">
+                  <small> {{ errorMessageLogin}} </small>
+                </div>
+                </div>
+                <div class="form-group">
+                  <label for="mot_de_passe">Mot de passe<span class="login-danger">*</span></label>
+                  <input class="form-control pass-input" type="password" formControlName="mot_de_passe">
+                  <span class="profile-views feather-eye toggle-password"></span>
+                  <div class="text-danger" ngIf="errorMessagepassword">
+                    <small> {{ errorMessagepassword}} </small>
+                  </div>
+                </div>
+                <div class="forgotpass">
+                  <div class="remember-me">
+                    <label class="custom_check mr-2 mb-0 d-inline-flex remember-me"> Se souvenir
+                      <input type="checkbox" name="radio">
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                  <a href="forgot-password.html">Mot de passe oublié?</a>
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-primary btn-block" type="submit">Connexion</button>
+                </div>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

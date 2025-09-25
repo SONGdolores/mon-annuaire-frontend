@@ -1,0 +1,17 @@
+<div class="search-filter">
+  <input type="text" placeholder="Rechercher..." [formControl]="form.controls.search" (keyup.enter)="applySearch()" />
+
+  <ng-select
+    [items]="categories"
+    bindLabel="libelle"
+    bindValue="id"
+    [formControl]="form.controls.categorie"
+    placeholder="Toutes catégories"
+  >
+  </ng-select>
+
+   <button type="button" (click)="applySearch()">Rechercher</button>
+</div>
+
+
+

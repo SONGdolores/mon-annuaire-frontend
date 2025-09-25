@@ -1,0 +1,74 @@
+<div class="modal-header">
+  <h4 class="modal-title">Ajouter un role</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+
+<div class="modal-body">
+
+  @if(successMessage) {
+    <div class="alert alert-success text-center" role="alert">
+      {{ successMessage }}
+    </div>
+  }
+
+   @if(errorMessage) {
+    <div class="alert alert-danger text-center" role="alert">
+      {{ errorMessage }}
+    </div>
+  }
+  
+  @if(isLoad()) {
+    <p class='text-center'>Chargement des données en cours...</p>
+  } @else {
+     <form [formGroup]="roleForm">
+
+    <div class="mb-3">
+      <label class="form-label">Nom</label>
+      <input type="text" class="form-control" formControlName="nom" placeholder="Entrez le nom">
+      @if(roleForm.get('nom')?.invalid && roleForm.get('nom')?.touched) {
+        <div class="text-danger small">
+          Le nom est obligatoire
+        </div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">code</label>
+      <input type="text" class="form-control" formControlName="code" placeholder="Entrez le code">
+      @if(roleForm.get('code')?.invalid && roleForm.get('code')?.touched) {
+        <div class="text-danger small">
+          Le code est obligatoire
+        </div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Description</label>
+      <input type="text" class="form-control" formControlName="description" placeholder="Entrez la description">
+      @if(roleForm.get('description')?.invalid && roleForm.get('description')?.touched) {
+        <div class="text-danger small">
+          La description est obligatoire
+        </div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Permissions</label>
+      @if(roleForm.get('permissions')?.invalid && roleForm.get('permissions')?.touched) {
+        <div class="text-danger small">
+          Les permissions sont obligatoires
+        </div>
+      }
+        <ng-select [items]="permissions()" bindValue="id" bindLabel="nom" formControlName="permissions" [multiple]="true">
+      </ng-select>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-secondary" (click)="activeModal.dismiss()">Annuler</button>
+      <button type="button" class="btn btn-primary" (click)="onSubmit()">Enregistrer</button>
+    </div>
+
+  </form>
+  }
+   
+</div>

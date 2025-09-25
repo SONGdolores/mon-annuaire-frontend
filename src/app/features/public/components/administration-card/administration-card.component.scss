@@ -1,0 +1,36 @@
+.admin-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  .image {
+    width: 100%;
+    height: 180px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .content {
+    padding: 15px;
+
+    h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #0d47a1; // bleu institutionnel
+    }
+
+    p {
+      font-size: 0.95rem;
+      color: #555;
+      margin: 4px 0;
+    }
+  }
+}
