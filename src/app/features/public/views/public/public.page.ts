@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { AdministrationModel } from '../../models/administration.model';
 import { ApiService } from '@/core/services/api.service';
 import { HeaderComponent } from "../../components/header/header.component";
@@ -19,24 +19,34 @@ export class PublicPage implements OnInit {
   total = 0;
   page = 1;
   limit = 10;
+  isLoading = signal(false);
 
   searchTerm = '';
   categorie = '';
 
+  apiService = inject(ApiService);
 
-  constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
     this.loadAdministrations();
+    console.log('PublicPage initialized');
+    console.log(this.administrations);
+    
+    
+    
   }
 
   loadAdministrations(): void {
+    this.isLoading.set(true);
+
+
     this.apiService.get<{ data: AdministrationModel[]; total: number }>('administrations', {
       search: this.searchTerm,
       categorie: this.categorie,
       page: this.page,
       limit: this.limit
     }).subscribe(res => {
+      this.isLoading.set(false);
       this.administrations = res.data;
       this.total = res.total;
     });

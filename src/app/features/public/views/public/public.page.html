@@ -10,11 +10,20 @@
 
 <!-- Section Cartes d'administrations -->
 <section class="cards-section">
-  <div class="administrations-grid">
+
+  @if (isLoading()) {
+    <div class="loading-indicator">
+      <p>Loading administrations...</p>
+    </div>
+  }@else {
+      <div class="administrations-grid">
   @for (admin of administrations; track admin.id) {
     <app-administration-card [administration]="admin"></app-administration-card>
   }
 </div>
+  }
+
+
 </section>
 
 <!-- Section Pagination -->
