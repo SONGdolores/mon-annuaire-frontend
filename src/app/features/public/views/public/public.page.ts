@@ -32,8 +32,6 @@ export class PublicPage implements OnInit {
     console.log('PublicPage initialized');
     console.log(this.administrations);
     
-    
-    
   }
 
   loadAdministrations(): void {

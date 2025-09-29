@@ -150,10 +150,11 @@ export class ModalAdministrationEditComponent implements OnInit {
         mission: formValue.mission,
         ministereDeTutelle: formValue.ministereDeTutelle,
         typeAdministrationId: formValue.typeAdministrationId,
+        quartier: formValue.quartier,
         villeId: formValue.villeId,
-        contacts: formValue.contacts,
-        services: formValue.services,
-        horaires: horairesPayload,
+        contacts: { connect: formValue.contacts.map((id: string) => ({ id })) },
+        services: { connect: formValue.services.map((id: string) => ({ id })) },
+        horaires: { create: horairesPayload },
         images: formValue.images.map((url: string) => ({ url }))
       };
 

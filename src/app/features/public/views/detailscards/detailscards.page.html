@@ -1,5 +1,7 @@
-@if (isLoading) {
-  <p>Chargement en cours...</p>
+@if (isLoading()) {
+  <div class="loading-indicator">
+    <p>Chargement en cours...</p>
+  </div>
 } @else {
   
   @if (admin) {
@@ -107,7 +109,7 @@
     </section>
   }
 
-  } @else {
-    <p>Aucune donnée trouvée.</p>
+ <button class="btn-back" (click)="goBack()"> Retour</button>
+
   }
 }

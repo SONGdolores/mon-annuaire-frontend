@@ -1,8 +1,8 @@
 import { ApiService } from '@/core/services/api.service';
 import { TitleCasePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AdministrationModel } from '../../models/administration.model';
 
 @Component({
@@ -14,14 +14,14 @@ import { AdministrationModel } from '../../models/administration.model';
 })
 export class DetailscardsPage implements OnInit {
   admin!: AdministrationModel;
-  isLoading = true;
+  isLoading = signal(true);
 
-  joursSemaine = ['lundi','mardi','mercredi','jeudi','vendredi','samedi'];
+  joursSemaine = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
 
-   constructor(
-    private route: ActivatedRoute,
-    private apiService: ApiService
-  ) {}
+  apiService = inject(ApiService);
+  route = inject(ActivatedRoute);
+  router = inject(Router);
+
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
@@ -30,14 +30,18 @@ export class DetailscardsPage implements OnInit {
         next: (data) => {
           console.log('Données reçues:', data);
           this.admin = data;
-          this.isLoading = false;
+          this.isLoading.set(false);
         },
         error: (err) => {
           console.error('Erreur lors du chargement', err);
-          this.isLoading = false;
+          this.isLoading.set(false);
         }
       });
     }
   }
+  goBack() {
+    this.router.navigate(['/public']);
+  }
+
 }
 

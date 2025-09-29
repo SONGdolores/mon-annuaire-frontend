@@ -52,6 +52,7 @@ export class ModalAdministrationComponent implements OnInit {
       contacts: new FormControl([]),
       services: new FormControl([]),
       horaires: this.fb.array([]),
+      cover: new FormControl(''),
       images: new FormControl([]),
     });
 
@@ -91,17 +92,23 @@ export class ModalAdministrationComponent implements OnInit {
     this.horaires().removeAt(index);
   }
 
-  onFileSelected(event: Event) {
+   onFileSelected(event: Event, isCover = false) {
     const input = event.target as HTMLInputElement;
-    if (input.files) {
-      Array.from(input.files).forEach(file => {
-        // Ici tu peux uploader vers ton backend ou juste stocker un chemin simulé
-        const fakeUrl = URL.createObjectURL(file);
-        this.images.push(fakeUrl);
-      });
-      this.adminForm.patchValue({ images: this.images });
-    }
-  }
+    if (!input.files || input.files.length === 0) return;
+
+    Array.from(input.files).forEach(file => {
+      const url = URL.createObjectURL(file);
+      if (isCover) {
+        this.adminForm.patchValue({ cover: url });
+      } else {
+        const imgs = this.adminForm.value.images || [];
+        if (!imgs.includes(url)) {
+          this.adminForm.patchValue({ images: [...imgs, url] });
+          this.images.push(url);
+        }
+      }
+    });
+   }
 
   // transforme "08:00" => Date ISO
   private transformTimeToDate(timeStr: string): Date {
@@ -134,6 +141,7 @@ export class ModalAdministrationComponent implements OnInit {
         contacts: formValue.contacts,
         services: formValue.services,
         horaires: horairesPayload,
+        cover: formValue.cover,
         images: formValue.images.map((url: string) => ({ url }))
       };
       console.log('Payload envoyé :', payload);
