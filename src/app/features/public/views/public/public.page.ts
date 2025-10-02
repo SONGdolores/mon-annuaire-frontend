@@ -17,8 +17,9 @@ export class PublicPage implements OnInit {
 
   administrations: AdministrationModel[] = [];
   total = 0;
+  totalPages = 1; 
   page = 1;
-  limit = 10;
+  limit = 4;
   isLoading = signal(false);
 
   searchTerm = '';
@@ -38,7 +39,8 @@ export class PublicPage implements OnInit {
     this.isLoading.set(true);
 
 
-    this.apiService.get<{ data: AdministrationModel[]; total: number }>('administrations', {
+    this.apiService.get<{ data: AdministrationModel[]; total: number ;
+      totalPages: number; }>('administrations', {
       search: this.searchTerm,
       categorie: this.categorie,
       page: this.page,
@@ -47,6 +49,7 @@ export class PublicPage implements OnInit {
       this.isLoading.set(false);
       this.administrations = res.data;
       this.total = res.total;
+      this.totalPages = res.totalPages;
     });
   }
 
@@ -58,7 +61,16 @@ export class PublicPage implements OnInit {
   }
 
   onPageChange(newPage: number): void {
+    if (newPage < 1 || newPage > this.totalPages) return; 
     this.page = newPage;
     this.loadAdministrations();
+  }
+
+  nextPage(): void {
+    if (this.page < this.totalPages) this.onPageChange(this.page + 1);
+  }
+
+  prevPage(): void {
+    if (this.page > 1) this.onPageChange(this.page - 1);
   }
 }

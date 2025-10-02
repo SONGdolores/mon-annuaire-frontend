@@ -26,7 +26,7 @@ export class RolePage  {
 
   open() {
 		const modal = this.modalService.open(ModalRoleComponent);
-    modal.result.catch((res: any) => {
+    modal.result.then((res: any) => {
       if (res === 'OK') {
         this.getRoles()
       }
@@ -37,14 +37,14 @@ export class RolePage  {
   const modalRef = this.modalService.open(ModalRoleEditComponent);
   modalRef.componentInstance.role = role;
 
-  modalRef.result.catch((res: any) => {
+  modalRef.result.then((res: any) => {
     if (res === 'OK') {
       this.getRoles();
     }
   });
 }
 
-  
+
 
   getRoles() {
     this.isLoading.set(true)

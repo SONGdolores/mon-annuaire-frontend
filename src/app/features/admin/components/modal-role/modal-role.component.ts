@@ -51,6 +51,7 @@ export class ModalRoleComponent implements OnInit {
 
           // Affiche le message de succès
           this.successMessage = "le role a été créé avec succès";
+          this.activeModal.close('OK');
         },
         error: (err) => {
           console.error('Erreur lors de la création du rôle', err);
@@ -68,5 +69,10 @@ export class ModalRoleComponent implements OnInit {
       this.errorMessage = "Veuillez remplir tous les champs obligatoires.";
     }
   }
+
+    close() {
+    this.activeModal.dismiss();
+  }
+
 }
 

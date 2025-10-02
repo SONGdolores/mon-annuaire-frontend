@@ -17,7 +17,7 @@ export class ModalRoleEditComponent {
   public activeModal = inject(NgbActiveModal);
 
   @Input() role!: any;  // role à modifier
- 
+
 
   roleForm!: FormGroup;
   permissions: any[] = [];
@@ -57,9 +57,9 @@ export class ModalRoleEditComponent {
 
     this.isLoading = true;
 
-    const updatedData = {      
-    code: this.roleForm.value.code,   
-    description: this.roleForm.value.description,  
+    const updatedData = {
+    code: this.roleForm.value.code,
+    description: this.roleForm.value.description,
     permissions: this.roleForm.value.permissions,
   };
 
@@ -80,5 +80,5 @@ export class ModalRoleEditComponent {
   close() {
     this.activeModal.dismiss();
   }
-  
+
 }

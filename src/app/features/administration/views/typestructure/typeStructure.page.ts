@@ -25,7 +25,7 @@ export class TypeStructurePage implements OnInit {
 
   open() {
     const modal = this.modalService.open(ModalTypeAdminComponent);
-    modal.result.catch((res: any) => {
+    modal.result.then((res: any) => {
       if (res === 'OK') {
         this.getTypeAdministration();
       }
@@ -37,7 +37,7 @@ export class TypeStructurePage implements OnInit {
     const modalRef = this.modalService.open(ModalTypeAdminEditComponent);
     modalRef.componentInstance.typeAdmin = typeAdmin;
 
-    modalRef.result.catch((res: any) => {
+    modalRef.result.then((res: any) => {
       if (res === 'OK') {
         this.getTypeAdministration();
       }

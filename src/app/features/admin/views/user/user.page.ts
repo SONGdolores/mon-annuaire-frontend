@@ -38,7 +38,7 @@ export class UserPage {
   const modalRef = this.modalService.open(ModalUserEditComponent);
   modalRef.componentInstance.user = user;
 
-  modalRef.result.catch((res: any) => {
+  modalRef.result.then((res: any) => {
     if (res === 'OK') {
       this.getUsers();
     }

@@ -16,7 +16,7 @@ export class ModalUserEditComponent {
   public activeModal = inject(NgbActiveModal);
 
   @Input() user!: any;  // utilisateur à modifier
- 
+
 
   userForm!: FormGroup;
   roles: any[] = [];

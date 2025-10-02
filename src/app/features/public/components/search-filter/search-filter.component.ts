@@ -5,6 +5,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 
 
 interface TypeAdministration {
+  id: string;
   libelle: string;
 }
 @Component({
@@ -17,7 +18,7 @@ interface TypeAdministration {
 export class SearchFilterComponent {
    @Output() filterChange = new EventEmitter<{ search: string, categorie: string }>();
 
-  form = new FormGroup({
+    form = new FormGroup({
     search: new FormControl(''),
     categorie: new FormControl('')
   });
@@ -35,8 +36,8 @@ export class SearchFilterComponent {
       next: (res: any) => {
         console.log('Types récupérés:', res);
         this.categories = res.map((type: any) => ({
-          libelle: type.libelle,
           id: type.id,
+          libelle: type.libelle,
         }));
       },
       error: (err) => console.error('Erreur récupération catégories', err)
