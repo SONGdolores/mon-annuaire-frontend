@@ -1,7 +1,17 @@
 <header class="welcome-header">
-  <div class="overlay">
-     <h1>Bienvenue sur l'annuaire des administrations</h1>
-     <p>Recherchez, explorez et localisez vos administrations facilement</p>
-  </div>
+
+  <div class="flag-bar"></div>
+
+  <div class="welcome-message">
+      <h1>Bienvenue sur l'annuaire des administrations</h1>
+      <p>Recherchez, explorez et localisez vos administrations facilement</p>
+    </div>
+
+<div class="nav-links">
+  <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Accueil</a>
+  <a routerLink="/cartePage" routerLinkActive="active">Carte</a>
+</div>
+
 </header>
+
 

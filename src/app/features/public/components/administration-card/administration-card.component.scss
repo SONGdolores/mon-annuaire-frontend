@@ -5,6 +5,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s ease;
   cursor: pointer;
+  margin-top: 40px;
 
   &:hover {
     transform: translateY(-5px);
@@ -24,7 +25,7 @@
       font-size: 1.3rem;
       font-weight: 600;
       margin-bottom: 8px;
-      color: #0d47a1; // bleu institutionnel
+      color: #0d47a1;
     }
 
     p {

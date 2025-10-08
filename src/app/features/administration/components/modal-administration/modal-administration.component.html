@@ -77,64 +77,6 @@
       </ng-select>
     </div>
 
-    <!-- Contacts -->
-    <div class="mb-3">
-      <label class="form-label">Contacts</label>
-      <ng-select [items]="contacts()" bindLabel="libelle" bindValue="id" [multiple]="true" formControlName="contacts">
-      </ng-select>
-    </div>
-
-    <!-- Services -->
-    <div class="mb-3">
-      <label class="form-label">Services</label>
-      <ng-select [items]="services()" bindLabel="description" bindValue="id" [multiple]="true"
-        formControlName="services">
-      </ng-select>
-    </div>
-
-    <!-- Horaires -->
-    <div class="mb-3">
-      <label class="form-label">Horaires</label>
-      <div formArrayName="horaires">
-        @for (horaire of horaires().controls; track $index; let i = $index) {
-        <div [formGroupName]="i" class="d-flex gap-2 mb-2">
-          <ng-select [items]="joursSemaine" bindLabel="label" bindValue="value" formControlName="jour"></ng-select>
-          <input type="time" class="form-control" formControlName="heureOuverture">
-          <input type="time" class="form-control" formControlName="heureFermeture">
-          <button type="button" class="btn btn-danger btn-sm" (click)="removeHoraire(i)">X</button>
-        </div>
-        }
-        <button type="button" class="btn btn-outline-primary btn-sm mt-2" (click)="addHoraire()">+ Ajouter
-          horaire</button>
-      </div>
-    </div>
-
-    <!-- Cover -->
-    <div class="mb-3">
-      <label class="form-label">Image de couverture</label>
-      <input type="file" (change)="onFileSelected($event, true)">
-      @if(adminForm.value.cover) {
-      <div class="mt-2">
-        <img [src]="adminForm.value.cover" alt="Cover" class="img-fluid" />
-      </div>
-      }
-    </div>
-    
-
-    <!-- Images secondaires -->
-    <div class="mb-3">
-      <label class="form-label">Galerie d'images</label>
-      <input type="file" multiple (change)="onFileSelected($event, false)">
-      @if(adminForm.value.images && adminForm.value.images.length > 0) {
-      <div class="mt-2 d-flex flex-wrap gap-2">
-        @for(img of adminForm.value.images; track $index) {
-        <img [src]="img" alt="Image" class="img-thumbnail" style="width:100px; height:100px; object-fit:cover;">
-        }
-      </div>
-      }
-      </div>
-
-
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" (click)="activeModal.dismiss()">Annuler</button>
         <button type="button" class="btn btn-primary" (click)="onSubmit()">Enregistrer</button>

@@ -1,0 +1,28 @@
+<app-header></app-header>
+
+<div class="map-view-container">
+
+  <aside class="sidebar">
+    <div class="search-filter">
+      <input type="text" placeholder="Rechercher une administration" [formControl]="searchQuery" (keyup.enter)="filterAdmins()" />
+      <button type="button" (click)="filterAdmins()">Rechercher</button>
+    </div>
+
+    <div class="details-cards">
+      @for(administration of filteredAdmins; track administration.id) {
+        <div class="admin-card" (click)="selectAdmin(administration)">
+          <div class="image" [style.backgroundImage]="'url(' + administration.cover + ')'"></div>
+          <div class="content">
+            <h3>{{ administration.nom }}</h3>
+            <p><strong>TypeAdministration :</strong> {{ administration.typeAdministration?.libelle }}</p>
+            <p><strong>Ville :</strong> {{ administration.ville?.nom }}</p>
+            <p><strong>Ministère de tutelle :</strong> {{ administration.ministereDeTutelle }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </aside>
+
+  <!-- Carte -->
+  <div id="map" class="map-container"></div>
+</div>

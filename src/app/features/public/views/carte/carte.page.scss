@@ -1,0 +1,17 @@
+.map-view-container {
+  display: flex;
+  height: calc(100vh - 160px);
+}
+
+.sidebar {
+  width: 350px;
+  padding: 15px;
+  background-color: #f5faff;
+  overflow-y: auto;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+}
+
+.map-container {
+  flex: 1;
+  height: 100%;
+}
