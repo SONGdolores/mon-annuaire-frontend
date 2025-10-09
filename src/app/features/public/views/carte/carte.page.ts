@@ -23,10 +23,25 @@ export class CartePage {
   private map!: L.Map;
   private markers!: any;
 
-  ngAfterViewInit(): void {
+    ngAfterViewInit(): void {
+    const map = L.map('map').setView([51.505, -0.09], 13);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    L.marker([51.5, -0.09]).addTo(map)
+      .bindPopup('A pretty marker');
+
+          setTimeout(() => {
+      this.map.invalidateSize();
+    }, 100);
+  }
+
+  /*ngAfterViewInit(): void {
     this.filteredAdmins = [...this.administrations];
     this.initMap();
-  }
+  }*/
 
   private initMap(): void {
 

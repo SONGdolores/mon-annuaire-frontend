@@ -17,7 +17,7 @@
 .nav-links {
   position: absolute;
   right: 40px;
-  top: 0px;
+  top: 30px;
   display: flex;
   gap: 25px;
 }
@@ -41,31 +41,3 @@
   color: #009639;
 }
 
-.welcome-header {
-  position: relative;
-  text-align: center;
-  color: #fff;
-  padding: 100px 20px 70px;
-  margin-top: 70px;
-}
-
-.welcome-message {
-  max-width: 800px;
-  margin: 0 auto;
-  margin-top: -30px;
-}
-
-.welcome-message h1 {
-  font-size: 2.4rem;
-  font-weight: 700;
-  margin-bottom: 10px;
-  letter-spacing: 0.5px;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-}
-
-.welcome-message p {
-  font-size: 1.15rem;
-  font-weight: 400;
-  color: #1a1212;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-}
