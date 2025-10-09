@@ -2,11 +2,23 @@
 
   <div class="flag-bar"></div>
 
-<div class="nav-links">
-  <a routerLink="/public" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Accueil</a>
-  <a routerLink="/cartePage" routerLinkActive="active">Carte</a>
-</div>
-
+<nav class="nav-links" role="navigation" aria-label="Navigation principale">
+  <a
+    routerLink="/public"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+    aria-current="page"
+  >
+    Accueil
+  </a>
+  <a
+    routerLink="/public/carte-globale"
+    routerLinkActive="active"
+    aria-current="page"
+  >
+    Carte
+  </a>
+</nav>
 </header>
 
 
