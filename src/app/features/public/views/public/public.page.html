@@ -3,7 +3,7 @@
 
 <!-- Section Recherche et Filtre -->
 <section class="search-section">
-  <app-search-filter 
+  <app-search-filter
   (filterChange)="onFilterChange($event.search, $event.categorie)">
   </app-search-filter>
 </section>
@@ -36,10 +36,13 @@
   </app-pagination>
 </section>
 
+<footer class="site-footer">
+  <p>Développé par ANINF &copy; 2025. Tous droits réservés.</p>
+</footer>
 
-<!-- 
+<!--
 
-Section Carte Leaflet 
+Section Carte Leaflet
 <section class="map-section">
   <app-map-view [administrations]="administrations"></app-map-view>
 </section>

@@ -1,0 +1,70 @@
+<!--<app-header></app-header>
+
+
+<div class="map-view-container">
+
+  <aside class="sidebar">
+    <div class="search-filter">
+      <input type="text" placeholder="Rechercher une administration" [formControl]="searchQuery" (keyup.enter)="filterAdmins()" />
+      <button type="button" (click)="filterAdmins()">Rechercher</button>
+    </div>
+
+    <div class="details-cards">
+      @for(administration of filteredAdmins; track administration.id) {
+        <div class="admin-card" (click)="selectAdmin(administration)">
+          <div class="image" [style.backgroundImage]="'url(' + administration.cover + ')'"></div>
+          <div class="content">
+            <h3>{{ administration.nom }}</h3>
+            <p><strong>TypeAdministration :</strong> {{ administration.typeAdministration?.libelle }}</p>
+            <p><strong>Ville :</strong> {{ administration.ville?.nom }}</p>
+            <p><strong>Ministère de tutelle :</strong> {{ administration.ministereDeTutelle }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </aside>
+-->
+  <!-- Carte
+  <div id="map" class="map-container"></div>
+</div>
+-->
+
+
+<app-header></app-header>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-lg-3 col-md-4 col-12 sidebar">
+      <div class="sidebar-content">
+       <h2>NAVIAGATION</h2>
+       <div class="search-filter">
+      <input type="text" placeholder="Rechercher une administration" [formControl]="searchQuery" (keyup.enter)="filterAdmins()" />
+      <button type="button" (click)="filterAdmins()">Rechercher</button>
+    </div>
+      </div>
+    </div>
+
+    <!-- Contenu principal avec carte -->
+    <div class="col-lg-9 col-md-8 col-12 main-content" style="width: 100%; height: 100vh;">
+      <div class="content-wrapper">
+       <p>NAVIAGATION</p>
+        
+        <!-- Exemple de contenu avec carte -->
+        <div class="card-container">
+          <div class="card proportional-card">
+            <div class="card-header">
+              <h5 class="card-title mb-0">Ma Carte</h5>
+            </div>
+            <div class="card-body p-0">
+              <!-- Votre composant carte ici -->
+              <div class="map-placeholder">
+                <p class="text-center m-0">Contenu de la carte</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

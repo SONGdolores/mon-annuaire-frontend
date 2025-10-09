@@ -1,7 +1,24 @@
 <header class="welcome-header">
-  <div class="overlay">
-     <h1>Bienvenue sur l'annuaire des administrations</h1>
-     <p>Recherchez, explorez et localisez vos administrations facilement</p>
-  </div>
+
+  <div class="flag-bar"></div>
+
+<nav class="nav-links" role="navigation" aria-label="Navigation principale">
+  <a 
+    routerLink="/public" 
+    routerLinkActive="active" 
+    [routerLinkActiveOptions]="{ exact: true }"
+    aria-current="page"
+  >
+    Accueil
+  </a>
+  <a 
+    routerLink="/public/carte-globale" 
+    routerLinkActive="active"
+    aria-current="page"
+  >
+    Carte
+  </a>
+</nav>
 </header>
+
 

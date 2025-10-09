@@ -1,17 +1,27 @@
-<div class="search-filter">
-  <input type="text" placeholder="Rechercher..." [formControl]="form.controls.search" (keyup.enter)="applySearch()" />
+<div class="header-section">
+  <!-- Message de bienvenue -->
+  <div class="welcome-message">
+    <h1>Bienvenue sur l'annuaire des administrations</h1>
+    <p>Recherchez, explorez et localisez vos administrations facilement</p>
+  </div>
 
-  <ng-select
-    [items]="categories"
-    bindLabel="libelle"
-    bindValue="id"
-    [formControl]="form.controls.categorie"
-    placeholder="Toutes catégories"
-  >
-  </ng-select>
+  <div class="search-filter">
+    <input
+      type="text"
+      placeholder="Rechercher..."
+      [formControl]="form.controls.search"
+      (keyup.enter)="applySearch()"
+    />
 
-   <button type="button" (click)="applySearch()">Rechercher</button>
+    <ng-select
+      [items]="categories"
+      bindLabel="libelle"
+      bindValue="id"
+      [formControl]="form.controls.categorie"
+      placeholder="Toutes catégories"
+    >
+    </ng-select>
+
+    <button type="button" (click)="applySearch()">Rechercher</button>
+  </div>
 </div>
-
-
-

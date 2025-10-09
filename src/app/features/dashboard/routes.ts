@@ -12,7 +12,6 @@ export const DASHBOARD_ROUTES: Routes = [
       {
         path: 'overview',
         component: OverviewPage,
-        //canActivate: [authGuard],
       },
     ]
   }

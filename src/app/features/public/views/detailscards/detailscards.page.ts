@@ -8,7 +8,7 @@ import { AdministrationModel } from '../../models/administration.model';
 @Component({
   selector: 'app-detailscards',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, TitleCasePipe],
   templateUrl: './detailscards.page.html',
   styleUrls: ['./detailscards.page.scss'],
 })
@@ -41,6 +41,28 @@ export class DetailscardsPage implements OnInit {
   }
   goBack() {
     this.router.navigate(['/public']);
+  }
+
+  onCoverSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+
+      const formData = new FormData();
+      formData.append('cover', file);
+
+      this.apiService.post(`administrations/${this.admin.id}/cover`, formData).subscribe({
+        next: (res: any) => {
+          console.log('Cover uploadée avec succès', res);
+          if (res && res.cover) {
+            this.admin.cover = res.cover;
+          }
+        },
+        error: (err) => {
+          console.error('Erreur lors de l’upload de la cover', err);
+        },
+      });
+    }
   }
 
 }

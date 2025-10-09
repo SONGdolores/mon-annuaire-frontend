@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, TitleCasePipe } from '@angular/common';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -141,10 +141,19 @@ export class ModalAdministrationComponent implements OnInit {
         contacts: formValue.contacts,
         services: formValue.services,
         horaires: horairesPayload,
-        cover: formValue.cover,
         images: formValue.images.map((url: string) => ({ url }))
       };
       console.log('Payload envoyé :', payload);
+
+    const formData = new FormData();
+
+    if (formValue.cover instanceof File) {
+      formData.append('cover', formValue.cover);
+    }
+
+    // Ajouter le reste du payload en JSON stringifié
+    formData.append('data', JSON.stringify(payload));
+    console.log('FormData envoyé :', formData);
 
       this.apiService.post('administrations', payload).subscribe({
         next: () => {

@@ -25,13 +25,13 @@
                 "input": "src/assets",
                 "output": "/assets"
               }
-
             ],
             "scripts": [
               "src/assets/plugins/bootstrap/js/bootstrap.bundle.min.js",
               "src/assets/js/jquery-3.6.0.min.js",
               "src/assets/js/feather.min.js",
-              "src/assets/js/script.js"
+              "src/assets/js/script.js",
+              "node_modules/leaflet/dist/leaflet.js"
             ],
             "styles": [
               "node_modules/@ng-select/ng-select/themes/default.theme.css",
@@ -44,7 +44,9 @@
               "src/assets/plugins/fontawesome/css/fontawesome.min.css",
               "src/assets/plugins/fontawesome/css/all.min.css",
               "src/styles.css",
-              "node_modules/leaflet/dist/leaflet.css"
+              "node_modules/leaflet/dist/leaflet.css",
+              "node_modules/leaflet.markercluster/dist/MarkerCluster.css",
+              "node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css"
             ],
             "polyfills": [
               "@angular/localize/init"
