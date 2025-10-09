@@ -2,7 +2,7 @@ import { TypeStructurePage } from '../../administration/views/typestructure/type
 export interface AdministrationModel {
   id: string;
   nom: string;
-  ministereDeTutelle: string;
+  ministereDeTutelle: string | null;
   mission: string;
   quartier: string;
   ville:  { id: string; nom: string } | null;

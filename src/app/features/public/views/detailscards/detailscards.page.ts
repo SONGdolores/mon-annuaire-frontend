@@ -8,7 +8,7 @@ import { AdministrationModel } from '../../models/administration.model';
 @Component({
   selector: 'app-detailscards',
   standalone: true,
-  imports: [ReactiveFormsModule, TitleCasePipe],
+  imports: [ReactiveFormsModule],
   templateUrl: './detailscards.page.html',
   styleUrls: ['./detailscards.page.scss'],
 })
