@@ -49,16 +49,19 @@ export class ModalUserComponent {
         next: (response: any) => {
           console.log('user créé avec succes', response);
           this.successMessage = "l'utilisateur a été créé avec succès";
+          this.errorMessage = null;
           this.activeModal.dismiss('OK');
         },
         error: (err) => {
           console.error('erreur lors de la creation des utilisateurs' , err);
 
-          if(err.error?.message) {
-            this.errorMessage = err.error.message; //message back
-          } else {
-             this.errorMessage = "une erreur est survenu lors de la creation des utilisateurs;" 
-          }
+        if (err.status === 409) { 
+          this.errorMessage = "Un utilisateur avec ce login existe déjà";
+        } else if (err.error?.message) {
+          this.errorMessage = err.error.message;
+        } else {
+          this.errorMessage = "Une erreur est survenue lors de la création de l’utilisateur";
+        }
           this.successMessage = null
         }
       });

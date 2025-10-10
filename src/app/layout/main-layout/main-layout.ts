@@ -21,7 +21,11 @@ export class MainLayout {
 
   logout() {
     console.log("Logout cliqué");
-    localStorage.clear();
+
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  localStorage.removeItem('permissions');
+
     this.router.navigate(['/login']);
   }
 
