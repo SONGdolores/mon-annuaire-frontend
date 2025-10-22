@@ -17,7 +17,6 @@ import { ApiService } from '@/core/services/api.service';
 export class CartePage implements AfterViewInit {
   private apiService = inject(ApiService);
 
-
   @Input() administrations: AdministrationModel[] = [];
   filteredAdmins: AdministrationModel[] = [];
   searchQuery = new FormControl('');
@@ -25,8 +24,18 @@ export class CartePage implements AfterViewInit {
 
   private map!: L.Map;
   private markerClusterGroup!: L.MarkerClusterGroup;
-  private readonly GABON_CENTER: L.LatLngExpression = [0.4162, 9.4673]; // Libreville
+  private readonly GABON_CENTER: L.LatLngExpression = [0.4162, 9.4673];
   private readonly DEFAULT_ZOOM = 6;
+
+  // Définition de l'icône personnalisée
+  private customIcon = L.icon({
+    iconUrl: 'assets/images/marker-icon.png', // Chemin vers votre image
+    iconSize: [25, 41], // Taille de l'icône [largeur, hauteur]
+    iconAnchor: [12, 41], // Point d'ancrage de l'icône
+    popupAnchor: [1, -34], // Point d'ancrage du popup
+    shadowUrl: '/img/location.png', // Ombre optionnelle
+    shadowSize: [41, 41] // Taille de l'ombre
+  });
 
   ngAfterViewInit(): void {
     this.initMap();
@@ -60,8 +69,6 @@ export class CartePage implements AfterViewInit {
     this.apiService.get('administrations').subscribe({
       next: (res: any) => {
         console.log('Réponse brute API:', res);
-        //const data = res?.data || [];
-        //this.administrations = data;
         this.administrations = res?.data || [];
         this.filteredAdmins = [...this.administrations];
         this.loadMarkers();
@@ -69,7 +76,6 @@ export class CartePage implements AfterViewInit {
       error: (err) => console.error('Erreur chargement administrations', err),
     });
   }
-
 
   private loadMarkers(): void {
     if (!this.map || !this.markerClusterGroup) return;
@@ -79,8 +85,10 @@ export class CartePage implements AfterViewInit {
     const validAdmins = this.administrations.filter(a => a.latitude && a.longitude);
 
     validAdmins.forEach(admin => {
-      const marker = L.marker([admin.latitude!, admin.longitude!])
-        .bindPopup(`<b>${admin.nom}</b><br>${admin.ville?.nom || ''}`)
+      const marker = L.marker([admin.latitude!, admin.longitude!], {
+        icon: this.customIcon // Utilisation de l'icône personnalisée
+      }).bindPopup(`<b>${admin.nom}</b><br>${admin.ville?.nom || ''}`);
+      
       this.markerClusterGroup.addLayer(marker);
     });
 
@@ -88,11 +96,9 @@ export class CartePage implements AfterViewInit {
       const group = L.featureGroup(this.markerClusterGroup.getLayers() as L.Marker[]);
       this.map.fitBounds(group.getBounds(), { padding: [50, 50] });
     } else {
-
       this.map.setView(this.GABON_CENTER, this.DEFAULT_ZOOM);
     }
   }
-
 
   filterAdmins(): void {
     const query = this.searchQuery.value?.toLowerCase() || '';
@@ -110,7 +116,6 @@ export class CartePage implements AfterViewInit {
 
     this.loadMarkers();
   }
-
 
   selectAdmin(administration: AdministrationModel): void {
     this.selectedAdministration = administration;
