@@ -44,12 +44,12 @@ export class ModalAdministrationEditComponent implements OnInit {
   ngOnInit(): void {
     this.adminForm = new FormGroup({
       nom: new FormControl({ value: '', disabled: true }, [Validators.required]),
-      mission: new FormControl('', [Validators.required]),
+      mission: new FormControl(''),
       ministereDeTutelle: new FormControl(''),
       typeAdministrationId: new FormControl(null),
-      quartier: new FormControl('', [Validators.required]),
-      latitude: new FormControl(null, [Validators.required]),
-      longitude: new FormControl(null, [Validators.required]),
+      quartier: new FormControl(''),
+      latitude: new FormControl(null),
+      longitude: new FormControl(null),
       villeId: new FormControl(null),
       contacts: new FormControl([]),
       services: new FormControl([]),
@@ -137,54 +137,61 @@ export class ModalAdministrationEditComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.adminForm.valid) {
-      const formValue = this.adminForm.getRawValue();
 
-      const horairesPayload = formValue.horaires.map((h: any) => ({
+    const modifiedFields = Object.keys(this.adminForm.controls)
+      .filter(key => this.adminForm.get(key)?.dirty)
+      .reduce((acc, key) => {
+        acc[key] = this.adminForm.get(key)?.value;
+        return acc;
+      }, {} as any);
+
+
+    if (Object.keys(modifiedFields).length === 0) {
+      this.errorMessage = "Aucune modification détectée.";
+      return;
+    }
+
+    if (modifiedFields.horaires) {
+      modifiedFields.horaires = modifiedFields.horaires.map((h: any) => ({
         jour: h.jour,
         heureOuverture: this.transformTimeToDate(h.heureOuverture),
         heureFermeture: this.transformTimeToDate(h.heureFermeture)
       }));
-
-      const payload = {
-        mission: formValue.mission,
-        ministereDeTutelle: formValue.ministereDeTutelle,
-        typeAdministrationId: formValue.typeAdministrationId,
-        quartier: formValue.quartier,
-        villeId: formValue.villeId,
-        contacts: { connect: formValue.contacts.map((id: string) => ({ id })) },
-        services: { connect: formValue.services.map((id: string) => ({ id })) },
-        horaires: { create: horairesPayload },
-        images: formValue.images.map((url: string) => ({ url }))
-      };
-
-      this.apiService.patch(`administrations/${this.administrationId}`, payload).subscribe({
-        next: () => {
-          this.successMessage = "Administration mise à jour avec succès";
-          this.errorMessage = null;
-          console.log('Administration mise à jour avec succès');
-          this.activeModal.close('OK');
-        },
-        error: (err) => {
-          console.error('Erreur lors de la mise à jour', err);
-
-
-          if (err.status === 404 || err.error?.message?.includes('introuvable')) {
-            this.errorMessage = "Cette administration n'existe pas .";
-          } else if (err.status === 409 || err.error?.message?.includes('existe déjà')) {
-            this.errorMessage = "Une administration avec ce nom existe déjà.";
-          } else if (err.status === 400) {
-            this.errorMessage = "Veuillez remplir correctement tous les champs obligatoires.";
-          } else {
-            this.errorMessage = "Erreur lors de la mise à jour de l’administration.";
-          }
-
-          this.successMessage = null;
-        }
-      });
-    } else {
-      this.adminForm.markAllAsTouched();
-      this.errorMessage = "Veuillez remplir les champs obligatoires.";
     }
+
+    if (modifiedFields.contacts) {
+      modifiedFields.contacts = { connect: modifiedFields.contacts.map((id: string) => ({ id })) };
+    }
+    if (modifiedFields.services) {
+      modifiedFields.services = { connect: modifiedFields.services.map((id: string) => ({ id })) };
+    }
+    if (modifiedFields.images) {
+      modifiedFields.images = modifiedFields.images.map((url: string) => ({ url }));
+    }
+
+    this.apiService.patch(`administrations/${this.administrationId}`, modifiedFields).subscribe({
+      next: () => {
+        this.successMessage = "Administration mise à jour avec succès ";
+        this.errorMessage = null;
+        console.log('Administration mise à jour avec succès');
+
+        setTimeout(() => this.activeModal.close('OK'), 1000);
+      },
+      error: (err) => {
+        console.error('Erreur lors de la mise à jour', err);
+
+        if (err.status === 404 || err.error?.message?.includes('introuvable')) {
+          this.errorMessage = "Cette administration n'existe pas.";
+        } else if (err.status === 409 || err.error?.message?.includes('existe déjà')) {
+          this.errorMessage = "Une administration avec ce nom existe déjà.";
+        } else if (err.status === 400) {
+          this.errorMessage = "Veuillez remplir correctement tous les champs obligatoires.";
+        } else {
+          this.errorMessage = "Erreur lors de la mise à jour de l’administration.";
+        }
+
+        this.successMessage = null;
+      }
+    });
   }
 }

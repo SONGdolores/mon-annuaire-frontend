@@ -31,7 +31,9 @@
               "src/assets/js/jquery-3.6.0.min.js",
               "src/assets/js/feather.min.js",
               "src/assets/js/script.js",
-              "node_modules/leaflet/dist/leaflet.js"
+              "node_modules/leaflet/dist/leaflet.js",
+              "node_modules/leaflet.markercluster/dist/leaflet.markercluster.js"
+
             ],
             "styles": [
               "node_modules/@ng-select/ng-select/themes/default.theme.css",

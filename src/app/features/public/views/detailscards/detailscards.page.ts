@@ -49,13 +49,14 @@ export class DetailscardsPage implements OnInit {
       const file = input.files[0];
 
       const formData = new FormData();
-      formData.append('cover', file);
+      formData.append('file', file);
+      formData.append('administrationId', this.admin.id);
 
       this.apiService.post(`administrations/${this.admin.id}/cover`, formData).subscribe({
         next: (res: any) => {
           console.log('Cover uploadée avec succès', res);
           if (res && res.cover) {
-            this.admin.cover = res.cover;
+            this.admin.cover =  `http://localhost:8080${res.cover}`;
           }
         },
         error: (err) => {

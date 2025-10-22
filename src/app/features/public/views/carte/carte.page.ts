@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, inject, Input } from '@angular/core';
 import { AdministrationModel } from '../../models/administration.model';
 import L from 'leaflet';
+import 'leaflet.markercluster';
 import { HeaderComponent } from "../../components/header/header.component";
 import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -9,7 +10,7 @@ import { ApiService } from '@/core/services/api.service';
 @Component({
   selector: 'app-carte',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule , HeaderComponent],
+  imports: [CommonModule, ReactiveFormsModule, HeaderComponent],
   templateUrl: './carte.page.html',
   styleUrls: ['./carte.page.scss'],
 })
@@ -18,71 +19,77 @@ export class CartePage implements AfterViewInit {
 
 
   @Input() administrations: AdministrationModel[] = [];
-
   filteredAdmins: AdministrationModel[] = [];
   searchQuery = new FormControl('');
   selectedAdministration: AdministrationModel | null = null;
 
   private map!: L.Map;
-  private markers: L.Marker[] = [];
+  private markerClusterGroup!: L.MarkerClusterGroup;
+  private readonly GABON_CENTER: L.LatLngExpression = [0.4162, 9.4673]; // Libreville
+  private readonly DEFAULT_ZOOM = 6;
 
-     ngAfterViewInit(): void {
-    this.filteredAdmins = [...this.administrations];
+  ngAfterViewInit(): void {
     this.initMap();
-    //this.loadAdministrations();
+    this.loadAdministrations();
+    this.filteredAdmins = [...this.administrations];
 
-    setTimeout(() => this.map.invalidateSize(), 200);
+    setTimeout(() => {
+      this.map.invalidateSize();
+      this.map.setView(this.GABON_CENTER, this.DEFAULT_ZOOM);
+    }, 300);
   }
 
   private initMap(): void {
-    this.map = L.map('map').setView([0.39, 9.45], 13);
+    this.map = L.map('map', {
+      center: this.GABON_CENTER,
+      zoom: this.DEFAULT_ZOOM,
+      minZoom: 3,
+      maxZoom: 18,
+      zoomControl: true,
+    });
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(this.map);
 
-    this.loadMarkers();
+    this.markerClusterGroup = L.markerClusterGroup();
+    this.map.addLayer(this.markerClusterGroup);
   }
 
-  //   private loadAdministrations(): void {
-  //   this.apiService.get('administrations').subscribe({
-  //     next: (res: any) => {
-  //       console.log('Réponse brute API:', res);
+  private loadAdministrations(): void {
+    this.apiService.get('administrations').subscribe({
+      next: (res: any) => {
+        console.log('Réponse brute API:', res);
+        //const data = res?.data || [];
+        //this.administrations = data;
+        this.administrations = res?.data || [];
+        this.filteredAdmins = [...this.administrations];
+        this.loadMarkers();
+      },
+      error: (err) => console.error('Erreur chargement administrations', err),
+    });
+  }
 
-  //       const data = res?.data || [];
 
-  //       this.administrations = data;
-  //       this.filteredAdmins = [...data];
-  //       this.loadMarkers();
-  //     },
-  //     error: (err) => console.error('Erreur chargement administrations', err),
-  //   });
-  // }
+  private loadMarkers(): void {
+    if (!this.map || !this.markerClusterGroup) return;
 
+    this.markerClusterGroup.clearLayers();
 
-    private loadMarkers(): void {
-    this.markers = [];
+    const validAdmins = this.administrations.filter(a => a.latitude && a.longitude);
 
-    this.administrations.forEach(administration => {
-      if (administration.latitude && administration.longitude) {
-        const marker = L.marker([administration.latitude, administration.longitude])
-          .bindPopup(`
-            <b>${administration.nom}</b><br>
-            ${administration.ville?.nom || ''}
-          `)
-          .addTo(this.map);
-
-        this.markers.push(marker);
-      }
+    validAdmins.forEach(admin => {
+      const marker = L.marker([admin.latitude!, admin.longitude!])
+        .bindPopup(`<b>${admin.nom}</b><br>${admin.ville?.nom || ''}`)
+      this.markerClusterGroup.addLayer(marker);
     });
 
-        if (this.administrations.length) {
-      const group = L.featureGroup(
-        this.administrations
-          .filter(a => a.latitude && a.longitude)
-          .map(a => L.marker([a.latitude!, a.longitude!]))
-      );
+    if (validAdmins.length) {
+      const group = L.featureGroup(this.markerClusterGroup.getLayers() as L.Marker[]);
       this.map.fitBounds(group.getBounds(), { padding: [50, 50] });
+    } else {
+
+      this.map.setView(this.GABON_CENTER, this.DEFAULT_ZOOM);
     }
   }
 
@@ -97,8 +104,11 @@ export class CartePage implements AfterViewInit {
       (administration.ville?.nom?.toLowerCase().includes(query)) ||
       (administration.typeAdministration?.libelle?.toLowerCase().includes(query))
     );
-
     console.log('Résultats filtrés :', this.filteredAdmins);
+    this.administrations = [...this.filteredAdmins];
+    console.log('Données administrations:', this.administrations);
+
+    this.loadMarkers();
   }
 
 
@@ -108,7 +118,7 @@ export class CartePage implements AfterViewInit {
     if (this.map && administration.latitude && administration.longitude) {
       this.map.setView([administration.latitude, administration.longitude], 15);
 
-      const marker = this.markers.find(
+      const marker = (this.markerClusterGroup.getLayers() as L.Marker[]).find(
         (m) =>
           m.getLatLng().lat === administration.latitude &&
           m.getLatLng().lng === administration.longitude
