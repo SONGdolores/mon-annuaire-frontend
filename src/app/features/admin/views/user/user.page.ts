@@ -35,7 +35,7 @@ export class UserPage {
   }
 
   openEdit(user: any) {
-  const modalRef = this.modalService.open(ModalUserEditComponent);
+  const modalRef = this.modalService.open(ModalUserEditComponent ,{ size: 'lg' });
   modalRef.componentInstance.user = user;
 
   modalRef.result.then((res: any) => {

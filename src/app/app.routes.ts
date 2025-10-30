@@ -7,12 +7,13 @@ import { ADMIN_ROUTES } from './features/admin/routes';
 import { LoginPage } from './features/auth/views/login/login.page';
 import { HOMEPAGE_ROUTES } from './features/homepage/routes';
 import { PUBLIC_ROUTES } from './features/public/routes';
+import { PublicPage } from './features/public/views/public/public.page';
 export const routes: Routes = [
     ...AUTH_ROUTES,
     ...DASHBOARD_ROUTES,
     ...ADMINISTRATION_ROUTES,
     ...ADMIN_ROUTES,{
-      path:'' , component:LoginPage,
+      path:'' , component:PublicPage,
     },
     ...HOMEPAGE_ROUTES,
     ...PUBLIC_ROUTES,];

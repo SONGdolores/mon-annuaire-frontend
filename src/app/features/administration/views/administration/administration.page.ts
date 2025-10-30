@@ -26,27 +26,31 @@ export class AdministrationPage implements OnInit {
 
 
   open() {
-    const modal = this.modalService.open(ModalAdministrationComponent);
-    modal.result.catch((res: any) => {
-      if (res === 'OK') {
-        this.getAdministrations();
-      }
-    });
-  }
+    const modal = this.modalService.open(ModalAdministrationComponent, { size: 'lg' });
+    modal.result.then((res: any) => {
+    if (res) {
+      this.getAdministrations();
+    }
+  }).catch(() => {
+
+  });
+}
+
+
 
 
 
   openEdit(administration: any) {
-    const modalRef = this.modalService.open(ModalAdministrationEditComponent);
+    const modalRef = this.modalService.open(ModalAdministrationEditComponent, { size: 'lg' });
     modalRef.componentInstance.administrationId = administration.id;
 
-    modalRef.result.catch((res: any) => {
+    modalRef.result.then((res: any) => {
       if (res === 'OK') {
         this.getAdministrations();
       }
     });
   }
-     
+
 
   // Charger administrations
   getAdministrations() {

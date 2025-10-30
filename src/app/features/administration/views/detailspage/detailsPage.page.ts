@@ -44,14 +44,14 @@ export class DetailsPagePage implements OnInit {
       next: (data: any) => {
         console.log('Administration récupérée : ', data);
 
-      data.contacts = data.contacts || [];
-      data.services = data.services || [];
-      data.horaires = data.horaires || [];
+      // data.contacts = data.contacts || [];
+      // data.services = data.services || [];
+      // data.horaires = data.horaires || [];
 
         this.administration.set(data);
-        this.quartier = data.quartier || '';
-        this.latitude = data.latitude || null;
-        this.longitude = data.longitude || null;
+        // this.quartier = data.quartier || '';
+        // this.latitude = data.latitude || null;
+        // this.longitude = data.longitude || null;
       },
       error: (err) => {
         console.error('Erreur lors du chargement de l’administration:', err);
