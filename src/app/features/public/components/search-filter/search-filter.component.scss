@@ -61,6 +61,31 @@
     }
   }
 
+   ng-select {
+    min-width: 250px; 
+    .ng-select-container {
+      border: 1px solid #90caf9;
+      border-radius: 8px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+
+      &:hover {
+        border-color: #42a5f5;
+      }
+    }
+
+    .ng-value-label {
+      color: #333;
+    }
+
+    .ng-placeholder {
+      color: #888;
+    }
+  }
+
   button {
     padding: 12px 25px;
     background: #42a5f5;

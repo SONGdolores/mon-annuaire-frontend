@@ -4,7 +4,6 @@ import { Routes } from '@angular/router';
 import { AdministrationPage } from './views/administration/administration.page';
 import { TypeStructurePage } from './views/typestructure/typeStructure.page';
 import { DetailsPagePage } from './views/detailspage/detailsPage.page';
-import { DcsiPage } from './views/dcsi/dcsi.page';
 
 export const ADMINISTRATION_ROUTES: Routes = [
   {
@@ -23,10 +22,6 @@ export const ADMINISTRATION_ROUTES: Routes = [
         path: 'detailspage/:id',
         component: DetailsPagePage
       },
-      {
-        path: 'dcsi',
-        component: DcsiPage
-      }
     ]
     ,
   }

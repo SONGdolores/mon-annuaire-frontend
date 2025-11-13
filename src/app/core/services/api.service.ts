@@ -39,4 +39,12 @@ export class ApiService {
     return this.http.patch(this.apiUrl+url, data)
   }
 
+  // getAllCovers(): Observable<any[]> {
+  //   return this.http.get<any[]>(this.apiUrl);
+  // }
+
+  // getCoverById(id: string): Observable<any> {
+  //   return this.http.get<any>(`${this.apiUrl}/${id}`);
+  // }
+
 }

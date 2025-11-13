@@ -1,8 +1,54 @@
+/* Conteneur principal en flex column */
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* prend toute la hauteur de l'écran */
+}
+
+/* Page-wrapper qui prend tout l'espace disponible sauf header et footer */
+.page-wrapper {
+  flex: 1; /* s'étire pour remplir l'espace restant */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Footer */
+footer {
+  background-color: #0a3f9b;
+  text-align: center;
+  padding: 10px 0;
+  margin-top: auto; /* pousse le footer en bas si le contenu est petit */
+}
+
+/* Optionnel : responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+  }
+  .page-wrapper {
+    padding: 10px;
+  }
+}
+
+/* Couleur du menu actif */
+.active-link {
+  background-color:#0a3f9b; /* bleu bootstrap */
+  color: #fff;
+}
+
+/* Pour garder la flèche du submenu ouverte si actif */
+.submenu > a.subdrop {
+  background-color: #0a3f9b;
+  color: #fff;
+}
+
+/*
+
 .user-img {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: 40px;   
+  width: 40px;
   height: 40px;
   border-radius: 50%;
   background-color: #f0f0f0;
@@ -11,5 +57,5 @@
 
 .logout-icon {
   font-size: 1.2rem;
-  color: #ff4d4f;  
-}
+  color: #ff4d4f;
+} */

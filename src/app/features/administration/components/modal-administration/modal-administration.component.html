@@ -35,52 +35,57 @@
       }
     </div>
 
-    <!-- Ministère -->
-    <div class="mb-3">
-      <label class="form-label">Ministère de tutelle</label>
-      <input type="text" class="form-control" formControlName="ministereDeTutelle" placeholder="Ministère">
-    </div>
-
-    <!-- TypeAdministration -->
-    <div class="mb-3">
-      <label class="form-label">Type d'administration </label>
-      <ng-select [items]="typeAdministrations()" bindLabel="libelle" bindValue="id"
-        formControlName="typeAdministrationId">
-      </ng-select>
-      @if(adminForm.get('typeAdministrationId')?.invalid && adminForm.get('typeAdministrationId')?.touched) {
-      <div class="text-danger small">Type</div>
-      }
-    </div>
-
-    <!-- Quartier -->
-    <div class="mb-3">
-      <label class="form-label">Quartier</label>
-      <input type="text" class="form-control" formControlName="quartier" placeholder="Quartier">
-    </div>
-
-    <!-- Latitude -->
-    <div class="mb-3">
-      <label class="form-label">Latitude</label>
-      <input type="number" step="any" class="form-control" formControlName="latitude" placeholder="Latitude">
-    </div>
-
-    <!-- Longitude -->
-    <div class="mb-3">
-      <label class="form-label">Longitude</label>
-      <input type="number" step="any" class="form-control" formControlName="longitude" placeholder="Longitude">
-    </div>
-
-    <!-- Ville -->
-    <div class="mb-3">
-      <label class="form-label">Ville</label>
-      <ng-select [items]="villes()" bindLabel="nom" bindValue="id" formControlName="villeId">
-      </ng-select>
-    </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" (click)="activeModal.dismiss()">Annuler</button>
-        <button type="button" class="btn btn-primary" (click)="onSubmit()">Enregistrer</button>
+    <!-- Type d'administration & Ministère de tutelle -->
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Type d'administration</label>
+        <ng-select [items]="typeAdministrations()" bindLabel="libelle" bindValue="id"
+          formControlName="typeAdministrationId">
+        </ng-select>
+        @if(adminForm.get('typeAdministrationId')?.invalid && adminForm.get('typeAdministrationId')?.touched) {
+        <div class="text-danger small">Type requis</div>
+        }
       </div>
+
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Ministère de tutelle</label>
+        <input type="text" class="form-control" formControlName="ministereDeTutelle" placeholder="Ministère de tutelle">
+      </div>
+    </div>
+
+    <!-- Quartier & Ville -->
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Quartier</label>
+        <input type="text" class="form-control" formControlName="quartier" placeholder="Quartier">
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Ville</label>
+        <ng-select [items]="villes()" bindLabel="nom" bindValue="id" formControlName="villeId">
+        </ng-select>
+      </div>
+    </div>
+
+    <!-- Latitude & Longitude -->
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Latitude</label>
+        <input type="number" step="any" class="form-control" formControlName="latitude" placeholder="Latitude">
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Longitude</label>
+        <input type="number" step="any" class="form-control" formControlName="longitude" placeholder="Longitude">
+      </div>
+    </div>
+
+
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-secondary" (click)="activeModal.dismiss()">Annuler</button>
+      <button type="button" class="btn btn-primary" (click)="onSubmit()">Enregistrer</button>
+    </div>
   </form>
   }
 </div>

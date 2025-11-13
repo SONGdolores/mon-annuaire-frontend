@@ -1,4 +1,5 @@
 import { ApiService } from '@/core/services/api.service';
+import { CommonModule } from '@angular/common';
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -6,7 +7,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
@@ -20,6 +21,13 @@ export class LoginPage implements OnInit {
     mot_de_passe: ['', Validators.required],
     rememberMe: [false]
   });
+
+  showPassword = false;
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
 
   ngOnInit() {
 
@@ -49,8 +57,9 @@ export class LoginPage implements OnInit {
       return;
     }
 
+
     const data = this.loginForm.value;
-    this.isLoading = true; 
+    this.isLoading = true;
 
     this.apiService.post('auth/login', data)
       .subscribe({
@@ -71,7 +80,7 @@ export class LoginPage implements OnInit {
         error: (err) => {
           console.error('Erreur de connexion :', err.error?.message || err.message);
           this.messageErreur.set(err.error?.message || 'Erreur de connexion');
-          this.isLoading = false; 
+          this.isLoading = false;
         }
       });
 

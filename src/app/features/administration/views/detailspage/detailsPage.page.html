@@ -87,47 +87,6 @@
       }
     </div>
 
-    @if (admin.dcsi?.length) {
-  @for (d of admin.dcsi; track d.id) {
-    <div class="card mb-4 shadow-sm bg-white text-dark p-3">
-      <h4 class="mb-3">Direction centrale des Systemes d'Informations (DCSI)</h4>
-
-      <div class="row">
-        <div class="col-md-6 mb-2">
-          <strong>Responsable :</strong> {{ d.responsableNom }}<br>
-          <strong>Email :</strong> {{ d.responsableEmail }}<br>
-          <strong>Téléphone :</strong> {{ d.responsablePhone || 'N/A' }}
-        </div>
-
-        <div class="col-md-6 mb-2">
-          <strong>Chef de service :</strong> {{ d.chefServiceNom }}<br>
-          <strong>Email :</strong> {{ d.chefServiceEmail }}<br>
-          <strong>Téléphone :</strong> {{ d.chefServicePhone || 'N/A' }}
-        </div>
-      </div>
-
-      @if (d.membres?.length) {
-        <h5 class="mt-3">Membres</h5>
-        <ul class="list-group">
-          @for (membre of d.membres; track membre.id) {
-            <li class="list-group-item">
-              {{ membre.nom }} — {{ membre.email }}
-              {{ membre.phone ? '(' + membre.phone + ')' : '' }}
-            </li>
-          }
-        </ul>
-      } @else {
-        <p class="text-muted">Aucun membre enregistré.</p>
-      }
-    </div>
-  }
-} @else {
-  <div class="card mb-4 shadow-sm bg-white text-dark p-3">
-    <h5 class="mb-0 text-muted">Aucune DCSI enregistrée pour cette administration.</h5>
-  </div>
-}
-
-
     <!-- Horaires -->
     <div class="card mb-4 shadow-sm bg-white text-dark p-3">
       <h4 class="mb-3">Horaires</h4>

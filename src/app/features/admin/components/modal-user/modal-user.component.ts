@@ -26,6 +26,8 @@ export class ModalUserComponent {
 
   ngOnInit(): void {
     this.userForm = this.fb.group({
+      nom: ['', Validators.required],
+      email: ['', Validators.required],
       login: ['', Validators.required],
       mot_de_passe: ['', Validators.required],
       roleId: ['', Validators.required]
@@ -55,7 +57,7 @@ export class ModalUserComponent {
         error: (err) => {
           console.error('erreur lors de la creation des utilisateurs' , err);
 
-        if (err.status === 409) { 
+        if (err.status === 409) {
           this.errorMessage = "Un utilisateur avec ce login existe déjà";
         } else if (err.error?.message) {
           this.errorMessage = err.error.message;

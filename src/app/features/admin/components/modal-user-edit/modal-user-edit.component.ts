@@ -26,6 +26,8 @@ export class ModalUserEditComponent {
 
   ngOnInit() {
     this.userForm = new FormGroup({
+      nom: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required]),
       login: new FormControl('', [Validators.required]),
       roleId: new FormControl('', [Validators.required]),
     })

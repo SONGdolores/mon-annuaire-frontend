@@ -32,7 +32,7 @@
                 <th>Nom</th>
                 <th>Code</th>
                 <th>Description</th>
-                <th>Permissions</th>
+                <!-- <th>Permissions</th> -->
                 <th class="text-end">Action</th>
               </tr>
             </thead>
@@ -43,11 +43,11 @@
                   <td>{{ role.nom }}</td>
                   <td>{{ role.code }}</td>
                   <td>{{ role.description }}</td>
-                  <td>
+                  <!-- <td>
                     @for (permission of role.permissions; track permission.id) {
                       {{ permission.nom }}
                     }
-                  </td>
+                  </td> -->
                   <td class="text-end">
                     <div class="actions">
                       <a class="btn btn-sm bg-danger-light">
