@@ -39,6 +39,14 @@ export class ApiService {
     return this.http.patch(this.apiUrl+url, data)
   }
 
+  uploadCover(administrationId: string, formData: FormData): Observable<any> {
+  return this.http.post(
+    `${this.apiUrl}/administrations/${administrationId}/cover`,
+    formData
+  );
+  
+}
+
   // getAllCovers(): Observable<any[]> {
   //   return this.http.get<any[]>(this.apiUrl);
   // }

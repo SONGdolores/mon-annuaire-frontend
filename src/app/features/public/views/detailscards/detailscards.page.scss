@@ -47,7 +47,7 @@ section {
     font-weight: 600;
     color: #333;
     margin-bottom: 0.75rem;
-    border-left: 4px solid #bfa150; // doré doux
+    border-left: 4px solid  #4571a6; // doré doux
     padding-left: 0.5rem;
   }
 
@@ -116,7 +116,7 @@ section {
 /* Bouton retour */
 .btn-back {
   display: inline-block;
-  background-color: #bfa150;
+  background-color:  #4571a6;
   color: #fff;
   border: none;
   border-radius: 0.5rem;
@@ -127,7 +127,7 @@ section {
   transition: all 0.3s ease;
 
   &:hover {
-    background-color: #a68c45;
+    background-color: #4571a6;
   }
 }
 

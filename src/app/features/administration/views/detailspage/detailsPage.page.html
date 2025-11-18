@@ -2,128 +2,146 @@
 
   @if(administration(); as admin) {
 
-    <!-- Bouton Annuler -->
-    <div class="d-flex justify-content-end mb-4">
-      <button class="btn btn-outline-dark px-4" (click)="annuler()">Annuler</button>
-    </div>
+  <!-- Bouton Annuler -->
+  <div class="d-flex justify-content-end mb-4">
+    <button class="btn btn-outline-dark px-4" (click)="annuler()">Retour</button>
+  </div>
 
-    <!-- Informations globales -->
-    <div class="card mb-4 shadow-sm bg-white text-dark p-3">
-      <h4 class="mb-3">Informations globales</h4>
-      <div class="row">
-        <div class="col-md-6 mb-2"><strong>Nom :</strong> {{ admin.nom }}</div>
-        <div class="col-md-6 mb-2"><strong>Mission :</strong> {{ admin.mission }}</div>
-        <div class="col-md-6 mb-2"><strong>Ministère :</strong> {{ admin?.ministereDeTutelle }}</div>
-        <div class="col-md-6 mb-2"><strong>Type :</strong> {{ admin?.typeAdministration?.libelle }}</div>
-        <div class="col-md-6 mb-2"><strong>Ville :</strong> {{ admin?.ville?.nom }}</div>
-        <div class="col-md-6 mb-2"><strong>Quartier :</strong> {{ admin.quartier }}</div>
-        <div class="col-md-6 mb-2"><strong>Latitude :</strong> {{ admin.latitude }}</div>
-        <div class="col-md-6 mb-2"><strong>Longitude :</strong> {{ admin.longitude }}</div>
+  <!-- Informations globales -->
+  <div class="card mb-4 shadow-sm bg-white text-dark p-3">
+    <h4 class="mb-3">Informations globales</h4>
+    <div class="row">
+      <div class="col-md-6 mb-2"><strong>Nom :</strong> {{ admin.nom }}</div>
+      <div class="col-md-6 mb-2"><strong>Mission :</strong> {{ admin.mission }}</div>
+      <div class="col-md-6 mb-2"><strong>Ministère :</strong> {{ admin?.ministereDeTutelle }}</div>
+      <div class="col-md-6 mb-2"><strong>Type :</strong> {{ admin?.typeAdministration?.libelle }}</div>
+      <div class="col-md-6 mb-2"><strong>Ville :</strong> {{ admin?.ville?.nom }}</div>
+      <div class="col-md-6 mb-2"><strong>Quartier :</strong> {{ admin.quartier }}</div>
+      <div class="col-md-6 mb-2"><strong>Latitude :</strong> {{ admin.latitude }}</div>
+      <div class="col-md-6 mb-2"><strong>Longitude :</strong> {{ admin.longitude }}</div>
+    </div>
+  </div>
+
+  <!-- Contacts -->
+  <div class="card mb-4 shadow-sm bg-white text-dark p-3">
+    <h4 class="mb-3">Contacts de l'administration</h4>
+
+    <!-- Formulaire ajout contact -->
+    <div class="row g-2 mb-3">
+      <div class="col-sm-6 col-md-5">
+        <input type="text" class="form-control" placeholder="Libellé" [(ngModel)]="nouveauContactLibelle">
+        @if(erreurContact) {
+        <p class="text-danger small mt-1">{{ erreurContact }}</p>
+        }
+      </div>
+      <div class="col-sm-4 col-md-5">
+        <select class="form-select" [(ngModel)]="nouveauContactType">
+          <option value="Telephone">Téléphone</option>
+          <option value="Email">Email</option>
+          <option value="Fax">Fax</option>
+          <option value="Autre">Autre</option>
+        </select>
+      </div>
+      <div class="col-sm-2 col-md-2">
+        <button class="btn btn-dark w-100" (click)="ajouterContact()">Ajouter</button>
       </div>
     </div>
 
-    <!-- Contacts -->
-    <div class="card mb-4 shadow-sm bg-white text-dark p-3">
-      <h4 class="mb-3">Contacts de l'administration</h4>
-
-      <!-- Formulaire ajout contact -->
-      <div class="row g-2 mb-3">
-        <div class="col-sm-6 col-md-5">
-          <input type="text" class="form-control" placeholder="Libellé" [(ngModel)]="nouveauContactLibelle">
-        </div>
-        <div class="col-sm-4 col-md-5">
-          <select class="form-select" [(ngModel)]="nouveauContactType">
-            <option value="Telephone">Téléphone</option>
-            <option value="Email">Email</option>
-            <option value="Fax">Fax</option>
-            <option value="Autre">Autre</option>
-          </select>
-        </div>
-        <div class="col-sm-2 col-md-2">
-          <button class="btn btn-dark w-100" (click)="ajouterContact()">Ajouter</button>
+    @if(admin.contacts?.length) {
+    <div class="row g-2">
+      @for(c of admin.contacts; track c.id) {
+      <div class="col-12 col-md-6">
+        <div class="card mb-2 p-2">
+          <strong>{{ c.type }}:</strong> {{ c.libelle }}
         </div>
       </div>
-
-      @if(admin.contacts?.length) {
-        <div class="row g-2">
-          @for(c of admin.contacts; track c.id) {
-            <div class="col-12 col-md-6">
-              <div class="card mb-2 p-2">
-                <strong>{{ c.type }}:</strong> {{ c.libelle }}
-              </div>
-            </div>
-          }
-        </div>
-      } @else {
-        <p class="text-muted">Aucun contact enregistré.</p>
       }
     </div>
+    } @else {
+    <p class="text-muted">Aucun contact enregistré.</p>
+    }
+  </div>
 
-    <!-- Services -->
-    <div class="card mb-4 shadow-sm bg-white text-dark p-3">
-      <h4 class="mb-3">Services</h4>
+  <!-- Services -->
+  <div class="card mb-4 shadow-sm bg-white text-dark p-3">
+    <h4 class="mb-3">Services</h4>
 
-      <div class="row g-2 mb-3">
-        <div class="col-12 col-md-10">
-          <input type="text" class="form-control" placeholder="Description du service" [(ngModel)]="nouveauServiceDescription">
-        </div>
-        <div class="col-12 col-md-2">
-          <button class="btn btn-dark w-100" (click)="ajouterService()">Ajouter</button>
-        </div>
+    <div class="row g-2 mb-3">
+      <div class="col-12 col-md-10">
+        <input type="text" class="form-control" placeholder="Description du service"
+          [(ngModel)]="nouveauServiceDescription">
       </div>
-
-      @if(admin.services?.length) {
-        <div class="row g-2">
-          @for(s of admin.services; track s.id) {
-            <div class="col-12 col-md-6">
-              <div class="card mb-2 p-2">
-                {{ s.description }}
-              </div>
-            </div>
-          }
-        </div>
-      } @else {
-        <p class="text-muted">Aucun service enregistré.</p>
-      }
+      <div class="col-12 col-md-2">
+        <button class="btn btn-dark w-100" (click)="ajouterService()">Ajouter</button>
+      </div>
     </div>
 
-    <!-- Horaires -->
-    <div class="card mb-4 shadow-sm bg-white text-dark p-3">
-      <h4 class="mb-3">Horaires</h4>
-
-      <div class="row g-2 mb-3">
-        <div class="col-12 col-md-4">
-          <select class="form-select" [(ngModel)]="nouveauHoraireJour">
-            @for(jour of joursSemaine; track jour) {
-              <option [value]="jour">{{ jour }}</option>
-            }
-          </select>
-        </div>
-        <div class="col-6 col-md-3">
-          <input type="time" class="form-control" [(ngModel)]="nouveauHoraireOuverture">
-        </div>
-        <div class="col-6 col-md-3">
-          <input type="time" class="form-control" [(ngModel)]="nouveauHoraireFermeture">
-        </div>
-        <div class="col-12 col-md-2">
-          <button class="btn btn-dark w-100" (click)="ajouterHoraire()">Ajouter</button>
+    @if(admin.services?.length) {
+    <div class="row g-2">
+      @for(s of admin.services; track s.id) {
+      <div class="col-12 col-md-6">
+        <div class="card mb-2 p-2">
+          {{ s.description }}
         </div>
       </div>
-
-      @if(admin.horaires?.length) {
-        <div class="row g-2">
-          @for(h of admin.horaires; track h.id) {
-            <div class="col-12 col-md-6">
-              <div class="card mb-2 p-2">
-                <strong>{{ h.jour }} :</strong> {{ h.heureOuverture }} - {{ h.heureFermeture }}
-              </div>
-            </div>
-          }
-        </div>
-      } @else {
-        <p class="text-muted">Aucun horaire enregistré.</p>
       }
     </div>
+    } @else {
+    <p class="text-muted">Aucun service enregistré.</p>
+    }
+  </div>
+
+  <!-- Horaires -->
+  <div class="card mb-4 shadow-sm bg-white text-dark p-3">
+    <h4 class="mb-3">Horaires</h4>
+
+    <div class="row g-2 mb-3">
+      <div class="col-12 col-md-4">
+        <select class="form-select" [(ngModel)]="nouveauHoraireJour">
+          @for(jour of joursSemaine; track jour) {
+          <option [value]="jour">{{ jour }}</option>
+          }
+        </select>
+      </div>
+      <div class="col-6 col-md-3">
+        <input type="time" class="form-control" [(ngModel)]="nouveauHoraireOuverture">
+      </div>
+      <div class="col-6 col-md-3">
+        <input type="time" class="form-control" [(ngModel)]="nouveauHoraireFermeture">
+      </div>
+      <div class="col-12 col-md-2">
+        <button class="btn btn-dark w-100" (click)="ajouterHoraire()">Ajouter</button>
+      </div>
+    </div>
+
+    @if(admin.horaires?.length) {
+    <div class="row g-2">
+      @for(h of admin.horaires; track h.id) {
+      <div class="col-12 col-md-6">
+        <div class="card mb-2 p-2">
+          <strong>{{ h.jour }} :</strong> {{ h.heureOuverture }} - {{ h.heureFermeture }}
+        </div>
+      </div>
+      }
+    </div>
+    } @else {
+    <p class="text-muted">Aucun horaire enregistré.</p>
+    }
+  </div>
 
   }
+
+  <div class="mb-4">
+  <label class="form-label">Image de couverture</label>
+
+  @if(administration()?.cover) {
+    <img [src]="'http://localhost:3000/uploads/covers/' + administration()?.cover?.filename" 
+         alt="Cover"
+         class="img-fluid rounded"
+         style="max-height: 250px; object-fit: cover;">
+  } @else {
+    <p class="text-muted">Aucune image de couverture enregistrée.</p>
+  }
+</div>
+
 </div>

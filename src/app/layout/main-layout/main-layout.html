@@ -18,7 +18,7 @@
         <div class="dropdown-menu">
           <div class="user-header">
           </div>
-          <a class="dropdown-item" (click)="logout()">Logout</a>
+          <a class="dropdown-item" (click)="logout()">Déconnexion</a>
         </div>
       </li>
 
@@ -31,6 +31,9 @@
     <div class="sidebar-inner slimscroll">
       <div id="sidebar-menu" class="sidebar-menu">
         <ul>
+
+          <li class="submenu">
+            <a routerLink="/dashboard/overview" ><i class="feather-grid"></i> <span> Dashboard</span></a>
 
           <li class="submenu">
             <a routerLink="/admin/user" ><i class="fas fa-chalkboard-teacher"></i> <span> Utilisateurs</span></a>

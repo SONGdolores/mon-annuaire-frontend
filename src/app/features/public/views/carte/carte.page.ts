@@ -105,7 +105,7 @@ export class CartePage implements AfterViewInit {
       (administration.typeAdministration?.libelle?.toLowerCase().includes(query))
     );
     console.log('Résultats filtrés :', this.filteredAdmins);
-    this.administrations = [...this.filteredAdmins];
+
     console.log('Données administrations:', this.administrations);
 
     this.loadMarkers();

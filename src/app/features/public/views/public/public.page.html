@@ -12,16 +12,24 @@
 <section class="cards-section">
 
   @if (isLoading()) {
-    <div class="loading-indicator">
-      <p>Loading administrations...</p>
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p class="loading-text">Recherche des administrations...</p>
     </div>
   }@else {
+
+    @if (administrations.length === 0) {
+      <div class="no-result">
+        <h3>Aucune administration trouvée</h3>
+      </div>
+      } @else {
       <div class="administrations-grid">
   @for (admin of administrations; track admin.id) {
     <app-administration-card [administration]="admin"></app-administration-card>
   }
 </div>
   }
+}
 
 
 </section>

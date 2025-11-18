@@ -1,1 +1,19 @@
-/* Styles pour app-overview */
+.card {
+  border-radius: 12px;
+  background: #ffffffe4;
+  border: 1px solid#eee;
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.page-title {
+  font-weight: 700;
+}
+
+.text-muted {
+  font-size: 0.9rem;
+}

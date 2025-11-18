@@ -33,13 +33,13 @@
   }
 }
 
-.administrations-grid {
-  margin: 30px auto;
-  max-width: 1200px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
-}
+// .administrations-grid {
+//   margin: 30px auto;
+//   max-width: 1200px;
+//   display: grid;
+//   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+//   gap: 20px;
+// }
 
 
 .site-footer {
@@ -73,4 +73,86 @@
   background-position: center;
   background-repeat: no-repeat;
 }
+/* Spinner loader */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 6px solid #ddd;
+  border-top-color: #007bff;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  margin-top: 15px;
+  color: #555;
+  font-size: 1.1rem;
+}
+
+/* Aucune administration trouvée */
+.no-result {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  text-align: center;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.no-result-content {
+  background: #ffffff;
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  max-width: 350px;
+}
+
+.no-result-icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+
+.no-result h3 {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: #333;
+}
+
+.no-result p {
+  margin-top: 8px;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+/* Petit effet d'apparition */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* Grid des administrations */
+.administrations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  padding: 20px;
+}
+
 

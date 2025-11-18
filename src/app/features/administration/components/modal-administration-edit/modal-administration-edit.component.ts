@@ -31,6 +31,8 @@ export class ModalAdministrationEditComponent implements OnInit {
   isLoad = signal(true);
 
   images: string[] = [];
+  coverFile: File | null = null;
+  coverPreview: string | null = null;
 
   joursSemaine = [
     { value: 'LUNDI', label: 'Lundi' },
@@ -61,6 +63,7 @@ export class ModalAdministrationEditComponent implements OnInit {
     this.loadAdministration();
   }
 
+  /** Dropdowns */
   loadDropdowns() {
     this.apiService.get('type-administration').subscribe({ next: (d: any) => this.typeAdministrations.set(d) });
     this.apiService.get('villes').subscribe({ next: (d: any) => this.villes.set(d) });
@@ -68,6 +71,7 @@ export class ModalAdministrationEditComponent implements OnInit {
     this.apiService.get('services').subscribe({ next: (d: any) => this.services.set(d) });
   }
 
+  /** Horaires */
   get horaires(): FormArray {
     return this.adminForm.get('horaires') as FormArray;
   }
@@ -84,9 +88,12 @@ export class ModalAdministrationEditComponent implements OnInit {
     this.horaires.removeAt(index);
   }
 
+  /** Chargement de l'administration */
   loadAdministration() {
     this.apiService.get(`administrations/${this.administrationId}`).subscribe({
       next: (data: any) => {
+        console.log("ADMINISTRATION RÉCUE :", data);
+        console.log("COVER :", data.cover);
         this.adminForm.patchValue({
           nom: data.nom,
           mission: data.mission,
@@ -110,6 +117,12 @@ export class ModalAdministrationEditComponent implements OnInit {
             heureFermeture: h.heureFermeture.slice(11, 16)
           }));
         }
+
+        // Charger la cover si elle existe
+        if (data.cover) {
+          this.coverPreview = data.cover.url;
+        }
+
         this.isLoad.set(false);
       },
       error: (err) => {
@@ -118,6 +131,7 @@ export class ModalAdministrationEditComponent implements OnInit {
     });
   }
 
+  /** Fichiers et images */
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files) {
@@ -129,6 +143,15 @@ export class ModalAdministrationEditComponent implements OnInit {
     }
   }
 
+  onCoverSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length) {
+      this.coverFile = input.files[0];
+      this.coverPreview = URL.createObjectURL(this.coverFile);
+    }
+  }
+
+  /** Transforme l'heure en Date */
   private transformTimeToDate(timeStr: string): Date {
     const [hours, minutes] = timeStr.split(':').map(Number);
     const date = new Date();
@@ -136,8 +159,28 @@ export class ModalAdministrationEditComponent implements OnInit {
     return date;
   }
 
-  onSubmit(): void {
+  /** Upload cover et patch */
+  updateAdministration() {
+    if (this.coverFile) {
+      const formData = new FormData();
+      formData.append('file', this.coverFile);
+      formData.append('administrationId', this.administrationId);
 
+      this.apiService.post(`covers`, formData)
+        .subscribe({
+          next: () => {
+            console.log("Cover envoyée !");
+            this.patchAdministration(); // PATCH après upload
+          },
+          error: (err) => console.error("Erreur upload cover :", err)
+        });
+    } else {
+      this.patchAdministration(); // PATCH directement si pas de cover
+    }
+  }
+
+  /** PATCH administration */
+  patchAdministration() {
     const modifiedFields = Object.keys(this.adminForm.controls)
       .filter(key => this.adminForm.get(key)?.dirty)
       .reduce((acc, key) => {
@@ -145,12 +188,12 @@ export class ModalAdministrationEditComponent implements OnInit {
         return acc;
       }, {} as any);
 
-
     if (Object.keys(modifiedFields).length === 0) {
       this.errorMessage = "Aucune modification détectée.";
       return;
     }
 
+    // Horaires
     if (modifiedFields.horaires) {
       modifiedFields.horaires = modifiedFields.horaires.map((h: any) => ({
         jour: h.jour,
@@ -159,19 +202,22 @@ export class ModalAdministrationEditComponent implements OnInit {
       }));
     }
 
+    // Contacts & services
     if (modifiedFields.contacts) {
       modifiedFields.contacts = { connect: modifiedFields.contacts.map((id: string) => ({ id })) };
     }
     if (modifiedFields.services) {
       modifiedFields.services = { connect: modifiedFields.services.map((id: string) => ({ id })) };
     }
+
+    // Images
     if (modifiedFields.images) {
       modifiedFields.images = modifiedFields.images.map((url: string) => ({ url }));
     }
 
     this.apiService.patch(`administrations/${this.administrationId}`, modifiedFields).subscribe({
       next: () => {
-        this.successMessage = "Administration mise à jour avec succès ";
+        this.successMessage = "Administration mise à jour avec succès";
         this.errorMessage = null;
         console.log('Administration mise à jour avec succès');
 
